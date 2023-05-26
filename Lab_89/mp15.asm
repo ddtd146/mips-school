@@ -53,7 +53,7 @@ noException:
 	la $a0, msgInpElm
 	syscall 
 inp_elm: 
-	addi $t1, $t1, 1
+	addi $t1, $t1, 1			# $t1 -> index initialized = 1
 	blt $s1, $t1, after_input #if index i > n then exit loop
 	li $v0, 5                 #read elm from stdin
 	syscall 
@@ -81,7 +81,7 @@ loop:
 	blt $s1, $t1, after_loop  	#if size < index then exit loop
 	lw $t4, 0($t0) 				#load current elm A[i]
 	addi $t0, $t0, 4          	#advance to next elm 's address
-	blt $t3, $t4, alrInc 		#if A[i+1]($t4) > updated A[i]($t3) then no need to moves
+	blt $t3, $t4, alrInc 		#if A[i]($t4) > updated A[i-1]($t3) then no need to moves
 	addi $t3, $t3, 1			#update $t3
 	sub $t4, $t3, $t4			#calculate moves needed = updated A[i-1] + 1 - A[i]
 	add $t2, $t2, $t4			#update moves
