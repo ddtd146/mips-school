@@ -5,6 +5,7 @@
 	msgInpRange: .asciiz "\nInput range (m, M): \n"
 	msgCount: .asciiz "Number of elms in range (m,M): "
 	msgExcep1: .asciiz "The size of array cant be less than 1"
+	msgExcep2: .asciiz "Lower bound cannot be greater than upper bound"
 .text
 main: 
 	nop
@@ -33,6 +34,12 @@ input_range:
 	li $v0, 5
 	syscall
 	add $a3, $v0, $0 #pass upper_bound into function
+	ble $a2, $a3, noExcep1
+	li $v0, 4
+	la $a0, msgExcep2 
+	syscall
+	j exit
+noExcep1:
 	add $a0, $s0, $0 #pass base_address into function
 	add $a1, $s1, $0 #pass number of elms into function
 count: 
