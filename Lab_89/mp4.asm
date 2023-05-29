@@ -134,12 +134,12 @@ COUNT_IN_RANGE:
 	addi $t2, $0, 0 #$t2 -> counter, initialized = 0
 loop1: 
 	addi $t1, $t1, 1 #inc index
-	blt $s1, $t1, after_loop #if index < n then exit loop
+	blt $s1, $t1, after_loop #if index > n then exit loop
 	lw $t3, 0($t0) #load current elm -> $t3
 	addi $t0, $t0, 4 #advance to address of next elm
 	slt $t8, $a3, $t3 # $t8 = 0 if current elm($t3) <= upper_bound($a3), else 1
-	slt $t9, $t3, $a2 # $t9 = 1 if current elm($t3) => lower_bound($a2), else 0
-	add $t4, $t8, $t9 # $t4 = $t8 + $9 so $t4 = 2 <=> if $t8 = 1 and $t9 = 1
+	slt $t9, $t3, $a2 # $t9 = 0 if current elm($t3) => lower_bound($a2), else 1
+	add $t4, $t8, $t9 # $t4 = $t8 + $9 so $t4 = 0 <=> if $t8 = 0 and $t9 = 0
 	blt $0, $t4, loop1 #if not in range ($t4 > 0) then continue loop else update_counter
 update_counter: 
 	add $t2, $t2, 1 #update counter to inc 1
